@@ -1,16 +1,46 @@
 <script setup lang="ts">
+
+const { playlists } = usePlaylistsStore()
+const { getLessonById } = useLessonsStore()
+
 const lists = [
   {
     heading: 'Popular Playlists',
-    items: ['Prettier', 'GitLens', 'Live Share'],
+    items: playlists.slice(4, 7).map((playlist) => {
+      const lesson = getLessonById(playlist.lessonIds[0])
+
+      return {
+        label: playlist.title,
+        link: getPlaylistLink(playlist, lesson),
+      }
+    }),
   },
   {
     heading: 'Configurations',
-    items: ['Settings', 'Keyboard Shortcuts', 'Code Snippets'],
+    items: playlists.slice(0, 3).map((playlist) => {
+      const lesson = getLessonById(playlist.lessonIds[0])
+      return {
+        label: playlist.title,
+        link: getPlaylistLink(playlist, lesson),
+      }
+    }),
   },
   {
     heading: 'Social',
-    items: ['YouTube', 'Telegram', 'GitHub'],
+    items: [
+      {
+        label: 'YouTube',
+        link: 'https://youtube.com',
+      },
+      {
+        label: 'Telegram',
+        link: 'https://telegram.org',
+      },
+      {
+        label: 'GitHub',
+        link: 'https://github.com',
+      },
+    ],
   },
 ]
 </script>

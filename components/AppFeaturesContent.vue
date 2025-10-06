@@ -1,24 +1,17 @@
 <script setup lang="ts">
-const features = [
-  {
-    icon: 'cog',
-    title: 'Settings',
-    description:
-      'Personalize your workspace to match your unique coding style and preferences effortlessly.',
-  },
-  {
-    icon: 'fire',
-    title: 'Keyboard Shortcuts',
-    description:
-      'Streamline your workflow with essential shortcuts that save you time and boost efficiency.',
-  },
-  {
-    icon: 'puzzle',
-    title: 'Extensions',
-    description:
-      'Expand your capabilities with powerful extensions tailored to enhance your coding experience.',
-  },
-]
+
+const { playlists } = usePlaylistsStore()
+const { getLessonById } = useLessonsStore()
+
+const features = ['cog', 'fire', 'puzzle'].map((icon, i) => {
+  const lesson = getLessonById(playlists[i].lessonIds[0]) //Первый урок
+  return {
+    title: playlists[i].title,
+    description: playlists[i].description,
+    link: getPlaylistLink(playlists[i], lesson),
+    icon,
+  }
+})
 </script>
 
 <template>
